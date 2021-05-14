@@ -18,12 +18,13 @@ typedef struct
 	int isEmpty;
 }eEmpleado;
 
-void InitEmployee(eEmpleado listadoEmpleados[], int tam);
+int InitEmployee(eEmpleado listadoEmpleados[], int tam);
 /*
  *\brief Inicializa el listado de empleados para saber si los vectores están vacíos u ocupados
  *
  *\param eTrabajo Listado de empleados para inicializar
  *\param int tamaño del listado de empleados
+ *\return retorna 0.
  */
 int BuscarLibre(eEmpleado listadoEmpleados[], int tam);
 /*
@@ -66,12 +67,13 @@ int FindEmployeeById(eEmpleado listadoEmpleados[], int tam);
  *\param int tamaño del listado de empleados
  *\return Devuelve el índice del array en donde se halla el id
  */
-void RemoveEmployee(eEmpleado listadoEmpleados[], int tamEmp);
+int RemoveEmployee(eEmpleado listadoEmpleados[], int tamEmp);
 /*
  *\brief Elimina el trabajo por id
  *
  *\param eEmpleado Listado de empleados para buscar y eliminar el elegido
  *\param int tamaño del listado de empleados
+ *\return retorna 0.
  */
 void ModificarPorId(eEmpleado listadoEmpleados[], int tam);
 /*
@@ -80,12 +82,13 @@ void ModificarPorId(eEmpleado listadoEmpleados[], int tam);
  *\param eEmpleado Listado de trabajos para buscar por id y modificar
  *\param int tamaño del listado de trabajos
  */
-void PrintEmployees(eEmpleado listadoEmpleados[], int tam);
+int PrintEmployees(eEmpleado listadoEmpleados[], int tam);
 /*
  *\brief Muestra un listado con todos los empleados dados de alta
  *
  *\param eEmpleado Listado de empleados para mostrar todos los que están ocupados
  *\param int tamaño del listado de empleados
+ *\return retorna 0;
  */
 void MostrarUnEmpleadoCompleto(eEmpleado empleadoParametro);
 /*
@@ -93,19 +96,21 @@ void MostrarUnEmpleadoCompleto(eEmpleado empleadoParametro);
  *
  *\param eEmpleado Para imprimir en pantalla los valores guardados en la estructura de empleados
  */
-void SortEmployeesByName(eEmpleado listadoEmpleados[], int tam);
+int SortEmployeesByName(eEmpleado listadoEmpleados[], int tam);
 /*
  *\brief Ordena el listado de empleados por nombre
  *
  *\param eEmpleado El listado de empleados para ordenar por el nombre
  *\param int tamaño del listado de empleados
+ *\return retorna 0.
  */
-void SortEmployeesBySector(eEmpleado listadoEmpleados[], int tam);
+int SortEmployeesBySector(eEmpleado listadoEmpleados[], int tam);
 /*
  *\brief Ordena el listado de empleados por sector
  *
  *\param eEmpleado El listado de empleados para ordenar por el sector
  *\param int tamaño del listado de empleados
+ *\return retorna 0.
  */
 float AcumuladorSalario(eEmpleado listadoEmpleados[], int tam);
 /*

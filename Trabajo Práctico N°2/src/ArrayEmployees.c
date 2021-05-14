@@ -10,13 +10,14 @@
 #define VACIO 0
 
 
-void InitEmployee(eEmpleado listadoEmpleados[], int tam)
+int InitEmployee(eEmpleado listadoEmpleados[], int tam)
 {
 	int i;
 	for(i = 0; i < tam; i++)
 	{
 		listadoEmpleados[i].isEmpty = VACIO;
 	}
+	return 0;
 }
 
 int BuscarLibre(eEmpleado listadoEmpleados[], int tam)
@@ -55,13 +56,13 @@ int idAutoincremental(eEmpleado listadoEmpleados[], int tam)
 {
 	int i;
 	int idValor;
-	idValor = 1;
+	idValor = -1;
 
 	for(i = 0; i < tam; i++)
 	{
 		if(listadoEmpleados[i].isEmpty == VACIO)
 		{
-			idValor = i;
+			idValor = i+1;
 			break;
 		}
 	}
@@ -111,20 +112,21 @@ int FindEmployeeById(eEmpleado listadoEmpleados[], int tam)
 	return encontrado;
 }
 
-void RemoveEmployee(eEmpleado listadoEmpleados[], int tamEmp)
+int RemoveEmployee(eEmpleado listadoEmpleados[], int tamEmp)
 {
 	int idIngresado;
 
 	idIngresado = FindEmployeeById(listadoEmpleados, tamEmp);
 	if(idIngresado == -1)
 	{
-		printf("No se ha encontrado el id. Vuelva a intentarlo.");
+		printf("No se ha encontrado el id. Vuelva a intentarlo. \n");
 	}
 	else
 	{
 		listadoEmpleados[idIngresado].isEmpty = VACIO;
 		printf("Producto eliminado con éxito \n");
 	}
+	return 0;
 }
 
 void ModificarPorId(eEmpleado listadoEmpleados[], int tam)
@@ -136,31 +138,39 @@ void ModificarPorId(eEmpleado listadoEmpleados[], int tam)
 
 	idIngresado = FindEmployeeById(listadoEmpleados, tam);
 
-	opcion = GetNumeroEntero("Ingrese lo que desea cambiar. 1. Nombre, 2.Apellido, 3. Salario, 4.Sector \n", "Error. Ingrese lo que desea cambiar \n", 1, 4);
-	switch(opcion)
+	if(idIngresado == -1)
 	{
-		case 1:
-			GetString("Ingrese el nuevo nombre \n", nombreNuevo);
-			strcpy(listadoEmpleados[idIngresado].nombre, nombreNuevo);
-			printf("Nombre modificado con éxito!! \n");
-		break;
-		case 2:
-			GetString("Ingrese el nuevo apellido \n", apellidoNuevo);
-			strcpy(listadoEmpleados[idIngresado].apellido, apellidoNuevo);
-			printf("Apellido modificado con éxito!! \n");
-		break;
-		case 3:
-			listadoEmpleados[idIngresado].salario = GetNumeroEntero("Ingrese el nuevo salario \n", "Error. \n", 8000, 50000);
-			printf("Salario modificado con éxito!");
-		break;
-		case 4:
-			listadoEmpleados[idIngresado].sector = GetNumeroEntero("Ingrese el nuevo sector \n", "Error. \n", 1, 50);
-			printf("Sector modificado con éxito!");
-		break;
+		printf("No se ha encontrado el id. Vuelva a intentarlo. \n");
 	}
+	else
+	{
+		opcion = GetNumeroEntero("Ingrese lo que desea cambiar. 1. Nombre, 2.Apellido, 3. Salario, 4.Sector \n", "Error. Ingrese lo que desea cambiar \n", 1, 4);
+		switch(opcion)
+		{
+			case 1:
+				GetString("Ingrese el nuevo nombre \n", nombreNuevo);
+				strcpy(listadoEmpleados[idIngresado].nombre, nombreNuevo);
+				printf("Nombre modificado con éxito!! \n");
+			break;
+			case 2:
+				GetString("Ingrese el nuevo apellido \n", apellidoNuevo);
+				strcpy(listadoEmpleados[idIngresado].apellido, apellidoNuevo);
+				printf("Apellido modificado con éxito!! \n");
+			break;
+			case 3:
+				listadoEmpleados[idIngresado].salario = GetNumeroEntero("Ingrese el nuevo salario \n", "Error. \n", 8000, 50000);
+				printf("Salario modificado con éxito!");
+			break;
+			case 4:
+				listadoEmpleados[idIngresado].sector = GetNumeroEntero("Ingrese el nuevo sector \n", "Error. \n", 1, 50);
+				printf("Sector modificado con éxito!");
+			break;
+		}
+	}
+
 }
 
-void PrintEmployees(eEmpleado listadoEmpleados[], int tam)
+int PrintEmployees(eEmpleado listadoEmpleados[], int tam)
 {
 	int i;
 	printf("----- LISTA DE TRABAJOS -----\n");
@@ -168,10 +178,10 @@ void PrintEmployees(eEmpleado listadoEmpleados[], int tam)
 	{
 		if(listadoEmpleados[i].isEmpty == OCUPADO)
 		{
-
 			MostrarUnEmpleadoCompleto(listadoEmpleados[i]);
 		}
 	}
+	return 0;
 }
 void MostrarUnEmpleadoCompleto(eEmpleado empleadoParametro)
 {
@@ -182,7 +192,7 @@ void MostrarUnEmpleadoCompleto(eEmpleado empleadoParametro)
 																				 empleadoParametro.salario);
 }
 
-void SortEmployeesByName(eEmpleado listadoEmpleados[], int tam)
+int SortEmployeesByName(eEmpleado listadoEmpleados[], int tam)
 {
 	int i;
 	int j;
@@ -200,9 +210,10 @@ void SortEmployeesByName(eEmpleado listadoEmpleados[], int tam)
 			}
 		}
 	}
+	return 0;
 }
 
-void SortEmployeesBySector(eEmpleado listadoEmpleados[], int tam)
+int SortEmployeesBySector(eEmpleado listadoEmpleados[], int tam)
 {
 	int i;
 	int j;
@@ -220,6 +231,7 @@ void SortEmployeesBySector(eEmpleado listadoEmpleados[], int tam)
 			}
 		}
 	}
+	return 0;
 }
 
 float AcumuladorSalario(eEmpleado listadoEmpleados[], int tam)

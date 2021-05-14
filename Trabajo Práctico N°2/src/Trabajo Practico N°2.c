@@ -17,16 +17,17 @@ int main(void)
 	int opcion;
 	int index;
 	int contador;
+	int print;
 	contador = 0;
 
-	InitEmployee(miEmpleado, X);
+	index = InitEmployee(miEmpleado, X);
 
 	do
 	{
 		printf("Elija una opción: \n");
 		printf("1. ALTA DE EMPLEADOS\n");
-		printf("2. BAJA DE EMPLEADOS \n");
-		printf("3. MODIFICACION \n");
+		printf("2. MODIFICACION \n");
+		printf("3. BAJA DE EMPLEADOS \n");
 		printf("4. LISTADO ORDENADO POR APELLIDO \n");
 		printf("5. LISTADO ORDENADO POR SECTOR\n");
 		printf("6. TOTAL DEL SALARIO Y PROMEDIO\n");
@@ -46,7 +47,6 @@ int main(void)
 				if(contador > 0)
 				{
 					ModificarPorId(miEmpleado, X);
-
 					break;
 				}
 				else
@@ -57,7 +57,7 @@ int main(void)
 			case 3:
 				if(contador > 0)
 				{
-					RemoveEmployee(miEmpleado, X);
+					index = RemoveEmployee(miEmpleado, X);
 					break;
 				}
 				else
@@ -68,8 +68,9 @@ int main(void)
 			case 4:
 				if(contador > 0)
 				{
-					SortEmployeesByName(miEmpleado, X);
-					PrintEmployees(miEmpleado, X);
+					index = SortEmployeesByName(miEmpleado, X);
+					print = PrintEmployees(miEmpleado, X);
+					printf("Mostrando: %d\n", print);
 					break;
 				}
 				else
@@ -80,8 +81,9 @@ int main(void)
 			case 5:
 				if(contador > 0)
 				{
-					SortEmployeesBySector(miEmpleado, X);
-					PrintEmployees(miEmpleado, X);
+					index = SortEmployeesBySector(miEmpleado, X);
+					print = PrintEmployees(miEmpleado, X);
+					printf("Mostrando: %d\n", print);
 					break;
 				}
 				else
