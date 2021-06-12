@@ -3,19 +3,15 @@
 #include "LinkedList.h"
 #include "Employee.h"
 #include "parser.h"
+#include "Validaciones.h"
 
-/** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
+
 int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 {
 	int ret;
 	ret = 0;
 	FILE *pFile;
+
 
 	if(path != NULL && pArrayListEmployee != NULL)
 	{
@@ -36,13 +32,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Carga los datos de los empleados desde el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -69,13 +58,6 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Alta de empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -92,10 +74,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 		id = autoId(pArrayListEmployee);
 		printf("Ingrese su nombre:\n");
 		scanf("%s", nombre);
-		printf("Ingrese sus horas trabajadas:\n");
-		scanf("%d", &horasTrabajadas);
-		printf("Ingrese su sueldo:\n");
-		scanf("%d", &sueldo);
+
+		GetNumeroEntero(&horasTrabajadas, "Ingrese sus horas trabajadas\n", "Error\n", 90, 200);
+		GetNumeroEntero(&sueldo, "Ingrese su sueldo\n", "Error\n", 8000, 100000);
 
 		employee_setId(nuevoEmpleado, id);
 		employee_setNombre(nuevoEmpleado, nombre);
@@ -110,13 +91,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Modificar datos de empleado
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
 	Employee* empleado;
@@ -131,15 +105,13 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 	int horasTrabajadas;
 	int sueldo;
 
-	controller_ListEmployee(pArrayListEmployee);
-
 	if(pArrayListEmployee != NULL)
 	{
 		len = ll_len(pArrayListEmployee);
 		if(pArrayListEmployee != NULL)
 		{
-			printf("Ingrese el id para editar el empleado:\n");
-			scanf("%d", &idAux);
+			controller_ListEmployee(pArrayListEmployee);
+			GetNumeroEntero(&idAux, "Ingrese el id a editar\n", "Error\n", 1, len);
 			for(i = 0; i < len; i++)
 			{
 				empleado = (Employee*)ll_get(pArrayListEmployee,i);
@@ -149,8 +121,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 					do
 					{
 						MenuEdit();
-						printf("Elija lo que desea cambiar:\n");
-						scanf("%d", &opcion);
+						GetNumeroEntero(&opcion, "Ingrese lo que desea cambiar\n", "Error\n", 0, 3);
 
 						switch(opcion)
 						{
@@ -160,13 +131,11 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 							employee_setNombre(empleado, nombre);
 						break;
 						case 2:
-							printf("Ingrese su nuevo horario: \n");
-							scanf("%d", &horasTrabajadas);
+							GetNumeroEntero(&horasTrabajadas, "Ingrese su nuevo horario\n", "Error\n", 90, 200);
 							employee_setHorasTrabajadas(empleado, horasTrabajadas);
 						break;
 						case 3:
-							printf("Ingrese su nuevo sueldo: \n");
-							scanf("%d", &sueldo);
+							GetNumeroEntero(&sueldo, "Ingrese su nuevo sueldo\n", "Error\n", 8000, 100000);
 							employee_setSueldo(empleado, sueldo);
 						break;
 						}
@@ -182,13 +151,6 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Baja de empleado
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -199,9 +161,8 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 
 	controller_ListEmployee(pArrayListEmployee);
 
-	printf("Ingrese el id a encontrar:\n");
-	scanf("%d", &id);
 	len = ll_len(pArrayListEmployee);
+	GetNumeroEntero(&id, "Ingrese el id a remover\n", "Error\n", 1, len);
 	if(pArrayListEmployee != NULL)
 	{
 		for(i = 0; i < len; i++)
@@ -222,13 +183,6 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Listar empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -270,8 +224,7 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 		do
 		{
 			MenuOrdenamiento();
-			printf("Elija el criterio de orden:\n");
-			scanf("%d", &opcion);
+			GetNumeroEntero(&opcion, "Ingrese el criterio de orden\n", "Error\n", 0, 4);
 
 			switch(opcion)
 			{
@@ -294,13 +247,6 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
 	FILE* pArchivo;
@@ -335,13 +281,6 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -349,11 +288,11 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	FILE* pArchivoBin;
 	Employee* empleado;
 	int len;
-	len = ll_len(pArrayListEmployee);
 	int i;
 
 	if(path != NULL && pArrayListEmployee != NULL)
 	{
+		len = ll_len(pArrayListEmployee);
 		pArchivoBin = fopen(path, "wb");
 
 		if(pArchivoBin != NULL)
@@ -362,6 +301,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 			{
 				empleado = (Employee*)ll_get(pArrayListEmployee, i);
 				fwrite(empleado, sizeof(Employee), 1, pArchivoBin);
+				printf("%d\n", i);
 			}
 			fclose(pArchivoBin);
 		}

@@ -4,13 +4,7 @@
 #include "Employee.h"
 #include "Controller.h"
 
-/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
+
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -23,12 +17,10 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	char sueldo[50];
 
 	ll_clear(pArrayListEmployee);
-	//pFile = fopen("data.csv", "r");
 
 	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
 		fscanf(pFile, "%[^,],%[^,],%[^,],%[^\n]\n",id,nombre,horasTrabajadas,sueldo);
-		//printf("%s -- %s -- %s -- %s\n", id, nombre, horasTrabajadas, sueldo);
 
 		while(!feof(pFile))
 		{
@@ -44,47 +36,35 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo binario).
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	int ret;
 	ret = 0;
 	Employee* empleado;
-	int id;
-	char nombre[40];
-	int sueldo;
-	int hrsTrabajadas;
-
-	//pFile = fopen("data.bin", "rb");
 
 	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
 		while(!feof(pFile))
 		{
+
 			empleado = employee_new();
-			fread(empleado, sizeof(Employee*), 1, pFile);
 
-			employee_getId(empleado, &id);
-			employee_getNombre(empleado, nombre);
-			employee_getHorasTrabajadas(empleado, &hrsTrabajadas);
-			employee_getSueldo(empleado, &sueldo);
+			fread(empleado, sizeof(Employee), 1, pFile);
+			if(feof(pFile))
+			{
+				break;
+			}
 
-			if(id != 0 && sueldo != 0 && hrsTrabajadas != 0 && nombre != NULL)
+			if(empleado != NULL)
 			{
 				ll_add(pArrayListEmployee, empleado);
 			}
 
-			printf("%d,%s,%d,%d\n",empleado->id, empleado->nombre, empleado->horasTrabajadas, empleado->sueldo);
 
 			ret = 1;
 		}
 		fclose(pFile);
 	}
+	printf("%d", ll_len(pArrayListEmployee));
     return ret;
 }
