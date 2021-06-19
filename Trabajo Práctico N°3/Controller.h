@@ -48,6 +48,13 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee);
  *
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee);
+/** \brief Ordenar empleados
+ *
+ * \param path char*
+ * \param pArrayListEmployee LinkedList*
+ * \return int
+ *
+ */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee);
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
  *
@@ -63,5 +70,12 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
  * \param pArrayListEmployee LinkedList*
  * \return int
  *
+ */
+int controller_deleteLinkedList(LinkedList* pArrayListEmployee);
+/*
+ * \brief borra la lista enlazada
+ *
+ * \param pArrayListEmployee LinkedList*
+ * \return int.
  */
 

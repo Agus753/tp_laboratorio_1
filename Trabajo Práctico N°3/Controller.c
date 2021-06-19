@@ -206,13 +206,6 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
     return ret;
 }
 
-/** \brief Ordenar empleados
- *
- * \param path char*
- * \param pArrayListEmployee LinkedList*
- * \return int
- *
- */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
 	int ret;
@@ -309,3 +302,11 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return ret;
 }
 
+int controller_deleteLinkedList(LinkedList* pArrayListEmployee)
+{
+	if(pArrayListEmployee != NULL)
+	{
+		ll_deleteLinkedList(pArrayListEmployee);
+	}
+	return 0;
+}
