@@ -424,12 +424,11 @@ void* ll_pop(LinkedList* this,int index)
 	if(this != NULL && index >= 0 && index < len)
 	{
 		returnAux = ll_get(this, index);
-		if(ll_remove(this, index) == -1)
+		if(returnAux != NULL)
 		{
-			returnAux = NULL;
+			ll_remove(this, index);
 		}
 	}
-
 	return returnAux;
 
     /*void* returnAux = NULL;
@@ -465,14 +464,15 @@ int ll_contains(LinkedList* this, void* pElement)
     if(this != NULL)
     {
     	indexElemento = ll_indexOf(this, pElement);
+    	returnAux = 1;
     	if(indexElemento == -1)
     	{
     		returnAux = 0;
     	}
-    	else
+    	/*else
     	{
     		returnAux = 1;
-    	}
+    	}*/
     }
 
     return returnAux;
@@ -487,17 +487,28 @@ int ll_contains(LinkedList* this, void* pElement)
                         ( 1) Si los elementos de (this2) estan contenidos en la lista (this)
                         ( 0) si los elementos de (this2) NO estan contenidos en la lista (this)
 */
-int ll_containsAll(LinkedList* this,LinkedList* this2)
+int ll_containsAll(LinkedList* this,LinkedList* this2)//optimizado
 {
     int returnAux = -1;
     int i;
     int len;
     len = ll_len(this);
     void* pElement;
-    int contador;
-    contador = 0;
 
     if(this != NULL && this2 != NULL)
+	{
+    	returnAux = 1;
+		for(i = 0; i < len; i++)
+		{
+			pElement = ll_get(this2, i);
+			if(ll_contains(this, pElement)== 0)
+			{
+				returnAux = 0;
+				break;
+			}
+		}
+
+    /*if(this != NULL && this2 != NULL)
     {
     	for(i = 0; i < len; i++)
     	{
@@ -514,7 +525,7 @@ int ll_containsAll(LinkedList* this,LinkedList* this2)
     	else
     	{
     		returnAux = 0;
-    	}
+    	}*/
     }
 
     return returnAux;
@@ -530,11 +541,29 @@ int ll_containsAll(LinkedList* this,LinkedList* this2)
                                 o (si el indice to es menor o igual a from o mayor al len de la lista)
                          (puntero a la nueva lista) Si ok
 */
-LinkedList* ll_subList(LinkedList* this,int from,int to)
+LinkedList* ll_subList(LinkedList* this,int from,int to)//optimizado
 {
     LinkedList* cloneArray = NULL;
 
-    Node* pNodo;
+    void* pElemento;
+    int i;
+	int len;
+	len = ll_len(this);
+
+	if(this != NULL && from >= 0 && from < len && to >from && to <= len)
+	{
+		cloneArray = ll_newLinkedList();
+		for(i = from; i < to; i++)
+		{
+			pElemento = ll_get(this, i);
+			if(pElemento != NULL)
+			{
+				addNode(cloneArray, i, pElemento);
+			}
+		}
+	}
+
+   /* Node* pNodo;
     int i;
     int len;
     len = ll_len(this);
@@ -550,7 +579,7 @@ LinkedList* ll_subList(LinkedList* this,int from,int to)
     			addNode(cloneArray, i, pNodo->pElement);
     		}
     	}
-    }
+    }*/
 
     return cloneArray;
 }
